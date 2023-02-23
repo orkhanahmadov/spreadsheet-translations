@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Orkhanahmadov\SpreadsheetTranslations\Tests;
 
 use Illuminate\Support\Facades\Config;

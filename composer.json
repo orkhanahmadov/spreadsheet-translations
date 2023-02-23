@@ -21,12 +21,14 @@
         "phpoffice/phpspreadsheet": "^1.27"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.14",
+        "nunomaduro/larastan": "^2.4",
         "orchestra/testbench": "^7.0|^8.0",
         "phpunit/phpunit": "^9.0|^10.0"
     },
     "autoload": {
         "psr-4": {
-            "Orkhanahmadov\\SpreadsheetTranslations\\": "SpreadsheetTranslations"
+            "Orkhanahmadov\\SpreadsheetTranslations\\": "src"
         }
     },
     "autoload-dev": {
@@ -36,8 +38,9 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "fix": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix --verbose --config=.php-cs-fixer.php",
+        "phpstan": "./vendor/bin/phpstan analyse"
     },
     "config": {
         "sort-packages": true
