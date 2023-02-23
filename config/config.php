@@ -5,14 +5,18 @@
  */
 return [
 
+    'locales' => ['en'],
+
     'type' => 'xlsx', // xlsx or csv
 
     'filepath' => lang_path('translations.xlsx'),
 
-    'translation_key_column' => 'A',
+    'header_row_index' => 0,
 
-    'ignored_columns' => [],
+    'translation_key_column_index' => 0,
 
-    'ignored_rows' => [],
+    'ignored_column_indexes' => [],
+
+    'ignored_row_indexes' => [],
 
 ];

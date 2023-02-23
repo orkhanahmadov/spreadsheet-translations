@@ -16,8 +16,9 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "illuminate/support": "^9.0|^10.0"
+        "php": "^8.0",
+        "illuminate/support": "^9.0|^10.0",
+        "phpoffice/phpspreadsheet": "^1.27"
     },
     "require-dev": {
         "orchestra/testbench": "^7.0|^8.0",
