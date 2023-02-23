@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Orkhanahmadov\SpreadsheetTranslations;
 
 use Illuminate\Support\ServiceProvider;
+use Orkhanahmadov\SpreadsheetTranslations\Commands\GenerateTranslationsCommand;
 
 class SpreadsheetTranslationsServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,9 @@ class SpreadsheetTranslationsServiceProvider extends ServiceProvider
                 __DIR__ . '/../config/config.php' => config_path('spreadsheet-translations.php'),
             ], 'config');
 
-            $this->commands([]);
+            $this->commands([
+                GenerateTranslationsCommand::class,
+            ]);
         }
     }
 
