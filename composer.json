@@ -1,0 +1,51 @@
+{
+    "name": "orkhanahmadov/spreadsheet-translations",
+    "description": "Spreadsheet translations for Laravel",
+    "keywords": [
+        "orkhanahmadov",
+        "spreadsheet-translations"
+    ],
+    "homepage": "https://github.com/orkhanahmadov/spreadsheet-translations",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Orkhan Ahmadov",
+            "email": "hey@orkhan.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^9.0|^10.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0|^8.0",
+        "phpunit/phpunit": "^9.0|^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Orkhanahmadov\\SpreadsheetTranslations\\": "SpreadsheetTranslations"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Orkhanahmadov\\SpreadsheetTranslations\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Orkhanahmadov\\SpreadsheetTranslations\\SpreadsheetTranslationsServiceProvider"
+            ]
+        }
+    }
+}
