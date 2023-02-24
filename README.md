@@ -1,17 +1,13 @@
-__# Very short description of the package
+## Spreadsheet translations for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/orkhanahmadov/laravel-spreadsheet-translations.svg?style=flat-square)](https://packagist.org/packages/orkhanahmadov/laravel-spreadsheet-translations)
-[![Total Downloads](https://img.shields.io/packagist/dt/orkhanahmadov/laravel-spreadsheet-translations.svg?style=flat-square)](https://packagist.org/packages/orkhanahmadov/laravel-spreadsheet-translations)
-![GitHub Actions](https://github.com/orkhanahmadov/laravel-spreadsheet-translations/actions/workflows/main.yml/badge.svg)
-
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+### WIP
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require orkhanahmadov/laravel-spreadsheet-translations
+composer require orkhanahmadov/spreadsheet-translations
 ```
 
 ## Usage
