@@ -6,8 +6,6 @@ return [
 
     'locales' => ['en'],
 
-    'type' => 'xlsx', // xlsx or csv
-
     'filepath' => lang_path('translations.xlsx'),
 
     'sheet' => null,

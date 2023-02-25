@@ -28,12 +28,12 @@ class SpreadsheetParser
     ) {
     }
 
-    public function getTranslations(): Collection
+    public function getTranslations(): array
     {
-        return Collection::make($this->translations);
+        return $this->translations;
     }
 
-    public function parse(): self
+    public function parse(): array
     {
         $this->loadWorksheet();
 
@@ -48,7 +48,7 @@ class SpreadsheetParser
             $this->parseRow($row);
         }
 
-        return $this;
+        return $this->translations;
     }
 
     protected function rowShouldBeIgnored(Row $row): bool
@@ -70,13 +70,13 @@ class SpreadsheetParser
 
         // loop over each locale and with its colum coordinate
         foreach ($this->localeColumns as $locale => $localeColumn) {
-            if (! isset($this->translations[$locale])) {
-                $this->translations[$locale] = [];
-            }
-
-            if (! isset($this->translations[$locale][$filename])) {
-                $this->translations[$locale][$filename] = [];
-            }
+//            if (! isset($this->translations[$locale])) {
+//                $this->translations[$locale] = [];
+//            }
+//
+//            if (! isset($this->translations[$locale][$filename])) {
+//                $this->translations[$locale][$filename] = [];
+//            }
 
             /*
              * fill translations so that end result looks like something like this:
@@ -89,7 +89,7 @@ class SpreadsheetParser
              *    ]
              * ]
              * */
-            $this->translations[$locale][$filename][$identifier] = $row->getColumnIterator()->seek($localeColumn)->current()->getValue();
+            $this->translations[$locale][$filename][$identifier] ??= $row->getColumnIterator()->seek($localeColumn)->current()->getValue();
         }
     }
 
@@ -104,7 +104,7 @@ class SpreadsheetParser
             fclose($filepath);
         }
 
-        return $this->getReader()->load($filepath);
+        return (new Xlsx())->load($filepath);
     }
 
     protected function loadWorksheet(): void
@@ -150,14 +150,6 @@ class SpreadsheetParser
             Str::before($key, '.'), // filename
             Str::after($key, '.'), // identifier
         ];
-    }
-
-    protected function getReader(): BaseReader
-    {
-        return match ($this->config->get('spreadsheet-translations.type')) {
-            'csv' => new Csv(),
-            default => new Xlsx(),
-        };
     }
 
     protected function getLocales(): Collection

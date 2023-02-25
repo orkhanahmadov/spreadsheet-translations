@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class FileGenerator
 {
-    public function generate(Collection $translations): void
+    public function generate(array $translations): void
     {
         foreach ($translations as $locale => $translationGroup) {
             $this->createLocaleFolderIsMissing($locale);
