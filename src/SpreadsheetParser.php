@@ -16,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\RowCellIterator;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Generator
+class SpreadsheetParser
 {
     protected Worksheet $worksheet;
     protected array $localeColumns = [];
@@ -28,54 +28,69 @@ class Generator
     ) {
     }
 
-    public function handle(): void
+    public function getTranslations(): Collection
+    {
+        return Collection::make($this->translations);
+    }
+
+    public function parse(): self
     {
         $this->loadWorksheet();
 
         $this->findLocaleColumns();
 
-        // start looping over each row
+        // loop over each row
         foreach ($this->worksheet->getRowIterator() as $row) {
-            // ignore if row is header row
-            if ($row->getRowIndex() === $this->getHeaderRowNumber()) {
+            if ($this->rowShouldBeIgnored($row)) {
                 continue;
             }
 
-            // ignore if row is one of the ignored rows
-            if (in_array($row->getRowIndex(), $this->config->get('spreadsheet-translations.ignored_rows'))) {
-                continue;
-            }
-
-            // get value from key column and parse it into 2 different variables as filename and identifier
-            // for example, if key is `auth.login.title`, then filename is `auth`, identifier is `login.title`
-            [$filename, $identifier] = $this->parseTranslationKey($row->getColumnIterator());
-
-            // loop over each locale and with its colum coordinate
-            foreach ($this->localeColumns as $locale => $localeColumn) {
-                if (! isset($this->translations[$locale])) {
-                    $this->translations[$locale] = [];
-                }
-
-                if (! isset($this->translations[$locale][$filename])) {
-                    $this->translations[$locale][$filename] = [];
-                }
-
-                /*
-                 * fill translations so that end result looks like something like this:
-                 *
-                 * [
-                 *   'en' => [
-                 *      'auth' => [
-                 *         'login.title' => 'This is title translation for English',
-                 *      ]
-                 *    ]
-                 * ]
-                 * */
-                $this->translations[$locale][$filename][$identifier] = $row->getColumnIterator()->seek($localeColumn)->current()->getValue();
-            }
+            $this->parseRow($row);
         }
 
-        $this->generateTranslationFiles();
+        return $this;
+    }
+
+    protected function rowShouldBeIgnored(Row $row): bool
+    {
+        // ignore if row is the header row
+        if ($row->getRowIndex() === $this->getHeaderRowNumber()) {
+            return true;
+        }
+
+        // ignore if row is one of the ignored rows
+        return in_array($row->getRowIndex(), $this->config->get('spreadsheet-translations.ignored_rows'));
+    }
+
+    protected function parseRow(Row $row): void
+    {
+        // get value from key column and parse it into 2 different variables as filename and identifier
+        // for example, if key is `auth.login.title`, then filename is `auth`, identifier is `login.title`
+        [$filename, $identifier] = $this->parseTranslationKey($row->getColumnIterator());
+
+        // loop over each locale and with its colum coordinate
+        foreach ($this->localeColumns as $locale => $localeColumn) {
+            if (! isset($this->translations[$locale])) {
+                $this->translations[$locale] = [];
+            }
+
+            if (! isset($this->translations[$locale][$filename])) {
+                $this->translations[$locale][$filename] = [];
+            }
+
+            /*
+             * fill translations so that end result looks like something like this:
+             *
+             * [
+             *   'en' => [
+             *      'auth' => [
+             *         'login.title' => 'This is title translation for English',
+             *      ]
+             *    ]
+             * ]
+             * */
+            $this->translations[$locale][$filename][$identifier] = $row->getColumnIterator()->seek($localeColumn)->current()->getValue();
+        }
     }
 
     protected function loadSpreadsheet(): Spreadsheet
@@ -124,40 +139,6 @@ class Generator
             // collect listed locales with the colum coordinate on the worksheet
             $this->localeColumns[$cell->getValue()] = $cell->getColumn();
         }
-    }
-
-    protected function generateTranslationFiles(): void
-    {
-        foreach ($this->translations as $locale => $localeGroup) {
-            $this->createLocaleFolder($locale);
-
-            foreach ($localeGroup as $filename => $translations) {
-                file_put_contents(
-                    lang_path("{$locale}/{$filename}.php"),
-                    $this->generateTranslationFileContents($translations)
-                );
-            }
-        }
-    }
-
-    protected function generateTranslationFileContents(array $translations): string
-    {
-        $output = Collection::make($translations)
-            ->map(fn (string $translation, string $key) => "'$key' => '{$translation}'")
-            ->join(",\r\n");
-
-        return "<?php return [\r\n{$output}\r\n];";
-    }
-
-    protected function createLocaleFolder(string $locale): void
-    {
-        $folder = lang_path($locale);
-
-        if (file_exists($folder)) {
-            return;
-        }
-
-        mkdir($folder);
     }
 
     protected function parseTranslationKey(RowCellIterator $columnIterator): array
