@@ -6,6 +6,7 @@ namespace Orkhanahmadov\SpreadsheetTranslations\Tests;
 
 use Illuminate\Support\Facades\Config;
 use Orkhanahmadov\SpreadsheetTranslations\SpreadsheetParser;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -192,6 +193,16 @@ class SpreadsheetParserTest extends TestCase
             ],
             $this->generator->parse()->getTranslations()
         );
+    }
+
+    public function testThrowsExceptionWhenGivenSheetNameDoesNotExist(): void
+    {
+        Config::set('spreadsheet-translations.sheet', 'ABC');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('ABC sheet does not exist.');
+
+        $this->storeSpreadsheetFile([]);
+        $this->generator->parse();
     }
 
     protected function setUp(): void

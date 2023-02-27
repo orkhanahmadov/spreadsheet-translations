@@ -100,7 +100,7 @@ class SpreadsheetParser
 
         throw_unless(
             $spreadsheet->sheetNameExists($sheetName),
-            new Exception("{$sheetName} sheet does not exist")
+            new Exception("{$sheetName} sheet does not exist.")
         );
 
         return $spreadsheet->getSheetByName($sheetName); // @phpstan-ignore-line
