@@ -9,10 +9,11 @@ use Orkhanahmadov\SpreadsheetTranslations\TranslationFileGenerator;
 class TranslationFileGeneratorTest extends TestCase
 {
     protected TranslationFileGenerator $generator;
+    protected string $filepath;
 
     public function testGeneratesTranslationFiles(): void
     {
-        $this->assertFileDoesNotExist($filepath = lang_path('en/file.php'));
+        $this->assertFileDoesNotExist($this->filepath);
 
         $this->generator->generate([
             'en' => [
@@ -20,9 +21,25 @@ class TranslationFileGeneratorTest extends TestCase
             ],
         ]);
 
-        $this->assertFileExists($filepath);
-        $this->assertSame("<?php return [\r\n'k' => 'v'\r\n];", file_get_contents($filepath));
-        unlink($filepath);
+        $this->assertFileExists($this->filepath);
+        $this->assertSame(
+            "<?php return [\r\n'k' => 'v'\r\n];",
+            file_get_contents($this->filepath)
+        );
+    }
+
+    public function testEscapesSingleQuiteCharacters(): void
+    {
+        $this->generator->generate([
+            'en' => [
+                'file' => ['k' => "don't do it!"],
+            ],
+        ]);
+
+        $this->assertSame(
+            "<?php return [\r\n'k' => 'don\'t do it!'\r\n];",
+            file_get_contents($this->filepath)
+        );
     }
 
     public function testCreatesFolderWhenDoesNotExist(): void
@@ -40,5 +57,15 @@ class TranslationFileGeneratorTest extends TestCase
         parent::setUp();
 
         $this->generator = new TranslationFileGenerator();
+        $this->filepath = lang_path('en/file.php');
+    }
+
+    protected function tearDown(): void
+    {
+        if (isset($this->filepath) && file_exists($this->filepath)) {
+            unlink($this->filepath);
+        }
+
+        parent::tearDown();
     }
 }

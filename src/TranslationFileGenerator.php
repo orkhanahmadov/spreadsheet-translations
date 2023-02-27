@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Orkhanahmadov\SpreadsheetTranslations;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class TranslationFileGenerator
 {
@@ -25,7 +26,8 @@ class TranslationFileGenerator
     protected function generateTranslationFileContents(array $translations): string
     {
         $output = Collection::make($translations)
-            ->map(fn (string $translation, string $key) => "'$key' => '{$translation}'")
+            ->map(fn (?string $translation) => Str::replace("'", "\'", $translation))
+            ->map(fn (?string $translation, string $key) => "'$key' => '{$translation}'")
             ->join(",\r\n");
 
         return "<?php return [\r\n{$output}\r\n];";
