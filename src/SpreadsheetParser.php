@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace Orkhanahmadov\SpreadsheetTranslations;
 
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use PhpOffice\PhpSpreadsheet\Reader\BaseReader;
-use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\RowCellIterator;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -24,13 +20,8 @@ class SpreadsheetParser
 
     public function __construct(
         protected Repository $config,
-        protected Factory $http
+        protected SpreadsheetFileHandler $fileHandler
     ) {
-    }
-
-    public function getTranslations(): array
-    {
-        return $this->translations;
     }
 
     public function parse(): array
@@ -69,62 +60,49 @@ class SpreadsheetParser
         [$filename, $identifier] = $this->parseTranslationKey($row->getColumnIterator());
 
         // loop over each locale and with its colum coordinate
+        // fill translations so that end result looks like something like this:
+        /*
+         * [
+         *   'en' => [
+         *      'auth' => [
+         *         'login.title' => 'This is title translation for English',
+         *      ]
+         *    ]
+         * ]
+         */
         foreach ($this->localeColumns as $locale => $localeColumn) {
-//            if (! isset($this->translations[$locale])) {
-//                $this->translations[$locale] = [];
-//            }
-//
-//            if (! isset($this->translations[$locale][$filename])) {
-//                $this->translations[$locale][$filename] = [];
-//            }
-
-            /*
-             * fill translations so that end result looks like something like this:
-             *
-             * [
-             *   'en' => [
-             *      'auth' => [
-             *         'login.title' => 'This is title translation for English',
-             *      ]
-             *    ]
-             * ]
-             * */
-            $this->translations[$locale][$filename][$identifier] ??= $row->getColumnIterator()->seek($localeColumn)->current()->getValue();
+            $this->translations[$locale][$filename][$identifier] = $row->getColumnIterator()
+                ->seek($localeColumn)
+                ->current()
+                ->getValue();
         }
-    }
-
-    protected function loadSpreadsheet(): Spreadsheet
-    {
-        $filepath = $this->config->get('spreadsheet-translations.filepath');
-
-        // If file path is URL we assume file is needs to be downloaded
-        if (filter_var($filepath, FILTER_VALIDATE_URL)) {
-            $contents = $this->http->get($filepath)->body();
-            fwrite($filepath = tmpfile(), $contents);
-            fclose($filepath);
-        }
-
-        return (new Xlsx())->load($filepath);
     }
 
     protected function loadWorksheet(): void
     {
-        $sheet = $this->config->get('spreadsheet-translations.sheet');
+        $xlsx = new Xlsx();
+        $spreadsheet = $xlsx->load($this->fileHandler->getFilePath());
 
-        $spreadsheet = $this->loadSpreadsheet();
+        $sheetName = $this->config->get('spreadsheet-translations.sheet');
 
-        if (is_null($sheet)) {
+        if (is_null($sheetName)) {
             $this->worksheet = $spreadsheet->getActiveSheet();
 
             return;
         }
 
-        $this->worksheet = $spreadsheet->getSheetByName($sheet);
+        $this->worksheet = $spreadsheet->getSheetByName($sheetName);
     }
 
-    protected function getHeaderRow(): Row
+    protected function parseTranslationKey(RowCellIterator $columnIterator): array
     {
-        return $this->worksheet->getRowIterator()->seek($this->getHeaderRowNumber())->current();
+        $keyColumn = $this->config->get('spreadsheet-translations.key_column');
+        $key = $columnIterator->seek($keyColumn)->current()->getValue();
+
+        return [
+            Str::before($key, '.'), // filename
+            Str::after($key, '.'), // identifier
+        ];
     }
 
     protected function findLocaleColumns(): void
@@ -141,15 +119,9 @@ class SpreadsheetParser
         }
     }
 
-    protected function parseTranslationKey(RowCellIterator $columnIterator): array
+    protected function getHeaderRow(): Row
     {
-        $keyColumn = $this->config->get('spreadsheet-translations.key_column');
-        $key = $columnIterator->seek($keyColumn)->current()->getValue();
-
-        return [
-            Str::before($key, '.'), // filename
-            Str::after($key, '.'), // identifier
-        ];
+        return $this->worksheet->getRowIterator()->seek($this->getHeaderRowNumber())->current();
     }
 
     protected function getLocales(): Collection

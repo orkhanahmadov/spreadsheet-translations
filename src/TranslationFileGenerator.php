@@ -6,7 +6,7 @@ namespace Orkhanahmadov\SpreadsheetTranslations;
 
 use Illuminate\Support\Collection;
 
-class FileGenerator
+class TranslationFileGenerator
 {
     public function generate(array $translations): void
     {

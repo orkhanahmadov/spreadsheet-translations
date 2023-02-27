@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Orkhanahmadov\SpreadsheetTranslations\Tests;
 
-use Illuminate\Support\Facades\Config;
-use Orkhanahmadov\SpreadsheetTranslations\FileGenerator;
+use Orkhanahmadov\SpreadsheetTranslations\TranslationFileGenerator;
 use Orkhanahmadov\SpreadsheetTranslations\SpreadsheetParser;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class SpreadsheetParserTest extends TestCase
 {
@@ -27,7 +24,7 @@ class SpreadsheetParserTest extends TestCase
 
         dd($translations);
 
-        (new FileGenerator())->generate($translations);
+        (new TranslationFileGenerator())->generate($translations);
     }
 
     protected function setUp(): void
