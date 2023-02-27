@@ -19,12 +19,19 @@ class GenerateTranslationsCommandTest extends TestCase
 
     public function testRunsParserAndFileGeneratorServices(): void
     {
+        $translations = [
+            'en' => ['login' => ['welcome' => 'Welcome']],
+        ];
+
         $parser = $this->mock(SpreadsheetParser::class);
         $parser->shouldReceive('parse')->once()->withNoArgs()->andReturnSelf();
-        $parser->shouldReceive('getTranslations')->once()->withNoArgs()->andReturn(['whatever']);
+        $parser->shouldReceive('getTranslations')->once()->withNoArgs()->andReturn($translations);
         $generator = $this->mock(TranslationFileGenerator::class);
-        $generator->shouldReceive('generate')->once()->with(['whatever']);
+        $generator->shouldReceive('generate')->once()->withArgs(['en', $translations]);
 
-        $this->assertSame(Command::SUCCESS, Artisan::call('translations:generate'));
+        $this->artisan('translations:generate')
+            ->expectsOutputToContain('Generating translation files for en...')
+            ->expectsOutputToContain('Generated translation files for en!')
+            ->assertExitCode(Command::SUCCESS);
     }
 }

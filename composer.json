@@ -2,8 +2,9 @@
     "name": "orkhanahmadov/spreadsheet-translations",
     "description": "Spreadsheet translations for Laravel",
     "keywords": [
-        "orkhanahmadov",
-        "spreadsheet-translations"
+        "laravel",
+        "multi language",
+        "spreadsheet translations"
     ],
     "homepage": "https://github.com/orkhanahmadov/spreadsheet-translations",
     "license": "MIT",
@@ -18,6 +19,8 @@
     "require": {
         "php": "^8.0",
         "guzzlehttp/guzzle": "^7.5",
+        "illuminate/console": "^8.0|^9.0|^10.0",
+        "illuminate/contracts": "^8.0|^9.0|^10.0",
         "illuminate/http": "^8.0|^9.0|^10.0",
         "illuminate/support": "^8.0|^9.0|^10.0",
         "phpoffice/phpspreadsheet": "^1.27"
@@ -40,7 +43,7 @@
     },
     "scripts": {
         "test": "./vendor/bin/phpunit",
-        "test-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage",
+        "test-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html .coverage",
         "fix": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix --verbose --config=.php-cs-fixer.php",
         "phpstan": "./vendor/bin/phpstan analyse"
     },

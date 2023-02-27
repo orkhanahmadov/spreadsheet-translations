@@ -15,10 +15,8 @@ class TranslationFileGeneratorTest extends TestCase
     {
         $this->assertFileDoesNotExist($this->filepath);
 
-        $this->generator->generate([
-            'en' => [
-                'file' => ['k' => 'v'],
-            ],
+        $this->generator->generate('en', [
+            'file' => ['k' => 'v'],
         ]);
 
         $this->assertFileExists($this->filepath);
@@ -30,10 +28,8 @@ class TranslationFileGeneratorTest extends TestCase
 
     public function testEscapesSingleQuiteCharacters(): void
     {
-        $this->generator->generate([
-            'en' => [
-                'file' => ['k' => "don't do it!"],
-            ],
+        $this->generator->generate('en', [
+            'file' => ['k' => "don't do it!"],
         ]);
 
         $this->assertSame(
@@ -46,7 +42,7 @@ class TranslationFileGeneratorTest extends TestCase
     {
         $this->assertFileDoesNotExist($filepath = lang_path('fr'));
 
-        $this->generator->generate(['fr' => []]);
+        $this->generator->generate('fr', []);
 
         $this->assertFileExists($filepath);
         rmdir($filepath);

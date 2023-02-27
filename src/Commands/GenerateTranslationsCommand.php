@@ -18,7 +18,15 @@ class GenerateTranslationsCommand extends Command
         SpreadsheetParser $parser,
         TranslationFileGenerator $fileGenerator
     ): int {
-        $fileGenerator->generate($parser->parse()->getTranslations());
+        $translations = $parser->parse()->getTranslations();
+
+        foreach ($translations as $locale => $translationGroup) {
+            $this->alert("Generating translation files for {$locale}...");
+
+            $fileGenerator->generate($locale, $translations);
+
+            $this->info("Generated translation files for {$locale}!");
+        }
 
         return Command::SUCCESS;
     }

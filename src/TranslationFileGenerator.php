@@ -5,28 +5,25 @@ declare(strict_types=1);
 namespace Orkhanahmadov\SpreadsheetTranslations;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 class TranslationFileGenerator
 {
-    public function generate(array $translations): void
+    public function generate(string $locale, array $translationGroup): void
     {
-        foreach ($translations as $locale => $translationGroup) {
-            $this->createLocaleFolderIsMissing($locale);
+        $this->createLocaleFolderIsMissing($locale);
 
-            foreach ($translationGroup as $filename => $translations) {
-                file_put_contents(
-                    lang_path("{$locale}/{$filename}.php"),
-                    $this->generateTranslationFileContents($translations)
-                );
-            }
+        foreach ($translationGroup as $filename => $translations) {
+            file_put_contents(
+                lang_path("{$locale}/{$filename}.php"),
+                $this->generateTranslationFileContents($translations)
+            );
         }
     }
 
     protected function generateTranslationFileContents(array $translations): string
     {
         $output = Collection::make($translations)
-            ->map(fn (?string $translation) => Str::replace("'", "\'", $translation))
+            ->map(fn (?string $translation) => str_replace("'", "\'", $translation ?? ''))
             ->map(fn (?string $translation, string $key) => "'$key' => '{$translation}'")
             ->join(",\r\n");
 

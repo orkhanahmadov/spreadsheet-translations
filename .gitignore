@@ -1,6 +1,6 @@
 /.idea
 /vendor
-/coverage
+/.coverage
 /.phpunit.cache
 composer.lock
 .phpunit.result.cache
