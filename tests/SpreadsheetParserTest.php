@@ -29,7 +29,7 @@ class SpreadsheetParserTest extends TestCase
                     'dashboard' => ['statistics' => 'Statistics'],
                 ],
             ],
-            $this->generator->parse()
+            $this->generator->parse()->getTranslations()
         );
     }
 
@@ -50,7 +50,7 @@ class SpreadsheetParserTest extends TestCase
                     ],
                 ],
             ],
-            $this->generator->parse()
+            $this->generator->parse()->getTranslations()
         );
     }
 
@@ -69,7 +69,7 @@ class SpreadsheetParserTest extends TestCase
                     ],
                 ],
             ],
-            $this->generator->parse()
+            $this->generator->parse()->getTranslations()
         );
     }
 
@@ -100,7 +100,7 @@ class SpreadsheetParserTest extends TestCase
                     'dashboard' => ['statistics' => 'Statistik'],
                 ],
             ],
-            $this->generator->parse()
+            $this->generator->parse()->getTranslations()
         );
     }
 
@@ -120,7 +120,7 @@ class SpreadsheetParserTest extends TestCase
                     ],
                 ],
             ],
-            $this->generator->parse()
+            $this->generator->parse()->getTranslations()
         );
     }
 
@@ -140,7 +140,7 @@ class SpreadsheetParserTest extends TestCase
                     ],
                 ],
             ],
-            $this->generator->parse()
+            $this->generator->parse()->getTranslations()
         );
     }
 
@@ -161,7 +161,7 @@ class SpreadsheetParserTest extends TestCase
                     ],
                 ],
             ],
-            $this->generator->parse()
+            $this->generator->parse()->getTranslations()
         );
     }
 
@@ -190,7 +190,7 @@ class SpreadsheetParserTest extends TestCase
                     ],
                 ],
             ],
-            $this->generator->parse()
+            $this->generator->parse()->getTranslations()
         );
     }
 

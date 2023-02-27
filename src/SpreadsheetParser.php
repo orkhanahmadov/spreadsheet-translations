@@ -7,6 +7,7 @@ namespace Orkhanahmadov\SpreadsheetTranslations;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\RowCellIterator;
@@ -24,7 +25,12 @@ class SpreadsheetParser
     ) {
     }
 
-    public function parse(): array
+    public function getTranslations(): array
+    {
+        return $this->translations;
+    }
+
+    public function parse(): self
     {
         $this->worksheet = $this->loadWorksheet();
 
@@ -39,7 +45,7 @@ class SpreadsheetParser
             $this->parseRow($row);
         }
 
-        return $this->translations;
+        return $this;
     }
 
     protected function rowShouldBeIgnored(Row $row): bool
@@ -77,7 +83,7 @@ class SpreadsheetParser
             $this->translations[$locale][$filename][$identifier] = $row->getColumnIterator()
                 ->seek($localeColumn)
                 ->current()
-                ->getValue();
+                ?->getValue();
         }
     }
 
@@ -92,13 +98,18 @@ class SpreadsheetParser
             return $spreadsheet->getActiveSheet();
         }
 
-        return $spreadsheet->getSheetByName($sheetName);
+        throw_unless(
+            $spreadsheet->sheetNameExists($sheetName),
+            new Exception("{$sheetName} sheet does not exist")
+        );
+
+        return $spreadsheet->getSheetByName($sheetName); // @phpstan-ignore-line
     }
 
     protected function parseTranslationKey(RowCellIterator $columnIterator): array
     {
         $keyColumn = $this->config->get('spreadsheet-translations.key_column');
-        $key = $columnIterator->seek($keyColumn)->current()->getValue();
+        $key = $columnIterator->seek($keyColumn)->current()?->getValue();
 
         return [
             Str::before($key, '.'), // filename
@@ -130,7 +141,7 @@ class SpreadsheetParser
 
     protected function getLocales(): Collection
     {
-        return Collection::make($this->config->get('spreadsheet-translations.locales'));
+        return new Collection($this->config->get('spreadsheet-translations.locales'));
     }
 
     protected function getHeaderRowNumber(): int
