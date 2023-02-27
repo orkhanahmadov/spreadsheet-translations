@@ -2,6 +2,6 @@
 /vendor
 composer.lock
 .phpunit.result.cache
+.phpunit.cache/test-results
 .php-cs-fixer.cache
 tests/file.xlsx
-.phpunit.cache/test-results
