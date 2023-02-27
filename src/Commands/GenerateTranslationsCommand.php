@@ -21,7 +21,7 @@ class GenerateTranslationsCommand extends Command
         $translations = $parser->parse()->getTranslations();
 
         foreach ($translations as $locale => $groups) {
-            $this->alert("Generating translation files for {$locale}...");
+            $this->warn("Generating translation files for {$locale}...");
 
             $fileGenerator->generate($locale, $groups);
 
