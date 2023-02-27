@@ -26,7 +26,7 @@ class SpreadsheetParser
 
     public function parse(): array
     {
-        $this->loadWorksheet();
+        $this->worksheet = $this->loadWorksheet();
 
         $this->findLocaleColumns();
 
@@ -50,7 +50,10 @@ class SpreadsheetParser
         }
 
         // ignore if row is one of the ignored rows
-        return in_array($row->getRowIndex(), $this->config->get('spreadsheet-translations.ignored_rows'));
+        return in_array(
+            $row->getRowIndex(),
+            $this->config->get('spreadsheet-translations.ignored_rows')
+        );
     }
 
     protected function parseRow(Row $row): void
@@ -78,7 +81,7 @@ class SpreadsheetParser
         }
     }
 
-    protected function loadWorksheet(): void
+    protected function loadWorksheet(): Worksheet
     {
         $xlsx = new Xlsx();
         $spreadsheet = $xlsx->load($this->fileHandler->getFilePath());
@@ -86,12 +89,10 @@ class SpreadsheetParser
         $sheetName = $this->config->get('spreadsheet-translations.sheet');
 
         if (is_null($sheetName)) {
-            $this->worksheet = $spreadsheet->getActiveSheet();
-
-            return;
+            return $spreadsheet->getActiveSheet();
         }
 
-        $this->worksheet = $spreadsheet->getSheetByName($sheetName);
+        return $spreadsheet->getSheetByName($sheetName);
     }
 
     protected function parseTranslationKey(RowCellIterator $columnIterator): array
@@ -121,7 +122,10 @@ class SpreadsheetParser
 
     protected function getHeaderRow(): Row
     {
-        return $this->worksheet->getRowIterator()->seek($this->getHeaderRowNumber())->current();
+        return $this->worksheet
+            ->getRowIterator()
+            ->seek($this->getHeaderRowNumber())
+            ->current();
     }
 
     protected function getLocales(): Collection
