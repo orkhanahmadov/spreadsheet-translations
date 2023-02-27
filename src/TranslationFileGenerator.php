@@ -8,11 +8,11 @@ use Illuminate\Support\Collection;
 
 class TranslationFileGenerator
 {
-    public function generate(string $locale, array $translationGroup): void
+    public function generate(string $locale, array $groups): void
     {
         $this->createLocaleFolderIsMissing($locale);
 
-        foreach ($translationGroup as $filename => $translations) {
+        foreach ($groups as $filename => $translations) {
             file_put_contents(
                 lang_path("{$locale}/{$filename}.php"),
                 $this->generateTranslationFileContents($translations)
