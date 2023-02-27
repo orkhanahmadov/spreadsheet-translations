@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Orkhanahmadov\SpreadsheetTranslations\Tests\Commands;
 
 use Illuminate\Support\Facades\Artisan;
-use Orkhanahmadov\SpreadsheetTranslations\Commands\GenerateTranslationsCommand;
 use Orkhanahmadov\SpreadsheetTranslations\SpreadsheetParser;
 use Orkhanahmadov\SpreadsheetTranslations\Tests\TestCase;
 use Orkhanahmadov\SpreadsheetTranslations\TranslationFileGenerator;
