@@ -10,9 +10,6 @@ use Illuminate\Http\Client\Factory;
 
 class SpreadsheetFileHandler
 {
-    /** @var false|resource  */
-    protected $tmpFile;
-
     public function __construct(
         protected Repository $config,
         protected Factory $http
@@ -23,25 +20,25 @@ class SpreadsheetFileHandler
     {
         // check if file is remote, if so download and store it locally
         if ($this->isRemoteFile()) {
-            return $this->temporarilyStoreRemoteFile();
+            return $this->locallyStoredRemoteFile();
         }
 
         return $this->filePathConfig();
     }
 
-    protected function temporarilyStoreRemoteFile(): string
+    protected function locallyStoredRemoteFile(): string
     {
-        $this->tmpFile = tmpfile();
+        $tmpFile = tempnam(sys_get_temp_dir(), 'spreadsheet');
 
         throw_if(
-            $this->tmpFile === false,
+            $tmpFile === false,
             new Exception('Could not create temporary file!')
         );
 
         // download remote file
-        fwrite($this->tmpFile, $this->getRemoteFileContents());
+        file_put_contents($tmpFile, $this->getRemoteFileContents());
 
-        return stream_get_meta_data($this->tmpFile)['uri'];
+        return $tmpFile;
     }
 
     protected function getRemoteFileContents(): string
@@ -60,14 +57,5 @@ class SpreadsheetFileHandler
     protected function filePathConfig(): string
     {
         return $this->config->get('spreadsheet-translations.filepath');
-    }
-
-    public function __destruct()
-    {
-        if (! isset($this->tmpFile)) {
-            return;
-        }
-
-        fclose($this->tmpFile);
     }
 }
