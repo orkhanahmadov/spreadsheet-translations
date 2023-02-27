@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.5",
         "illuminate/http": "^8.0|^9.0|^10.0",
         "illuminate/support": "^8.0|^9.0|^10.0",
         "phpoffice/phpspreadsheet": "^1.27"

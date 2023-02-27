@@ -13,7 +13,7 @@ class SpreadsheetParserTest extends TestCase
 
     public function test(): void
     {
-        $this->prepareSpreadsheetFile([
+        $this->storeSpreadsheetFile([
             ['key', 'comment', 'en', 'de'],
             ['login.welcome', 'welcome page', 'Welcome', 'Wilkommen'],
             ['login.form.first_name', 'form first name field', 'First name', 'Vorname'],

@@ -20,7 +20,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ];
     }
 
-    protected function prepareSpreadsheetFile(array $rows): void
+    protected function storeSpreadsheetFile(array $rows): void
     {
         $spreadsheet = new Spreadsheet();
         $worksheet = $spreadsheet->getWorksheetIterator()->current();

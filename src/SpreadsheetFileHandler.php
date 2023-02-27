@@ -10,6 +10,9 @@ use Illuminate\Http\Client\Factory;
 
 class SpreadsheetFileHandler
 {
+    /** @var false|resource  */
+    protected $tmpFile;
+
     public function __construct(
         protected Repository $config,
         protected Factory $http
@@ -20,7 +23,7 @@ class SpreadsheetFileHandler
     {
         // check if file is remote, if so download and store it locally
         if ($this->isRemoteFile()) {
-            $this->temporarilyStoreRemoteFile();
+            return $this->temporarilyStoreRemoteFile();
         }
 
         return $this->filePathConfig();
@@ -28,18 +31,17 @@ class SpreadsheetFileHandler
 
     protected function temporarilyStoreRemoteFile(): string
     {
-        $tmpFilepath = tmpfile();
+        $this->tmpFile = tmpfile();
+
         throw_if(
-            $tmpFilepath === false,
+            $this->tmpFile === false,
             new Exception('Could not create temporary file!')
         );
 
         // download remote file
-        $contents = $this->getRemoteFileContents();
-        fwrite($tmpFilepath, $contents);
-        fclose($tmpFilepath);
+        fwrite($this->tmpFile, $this->getRemoteFileContents());
 
-        return (string) $tmpFilepath;
+        return stream_get_meta_data($this->tmpFile)['uri'];
     }
 
     protected function getRemoteFileContents(): string
@@ -52,11 +54,20 @@ class SpreadsheetFileHandler
 
     protected function isRemoteFile(): bool
     {
-        return filter_var($this->filePathConfig(), FILTER_VALIDATE_URL);
+        return filter_var($this->filePathConfig(), FILTER_VALIDATE_URL) !== false;
     }
 
     protected function filePathConfig(): string
     {
         return $this->config->get('spreadsheet-translations.filepath');
+    }
+
+    public function __destruct()
+    {
+        if (! isset($this->tmpFile)) {
+            return;
+        }
+
+        fclose($this->tmpFile);
     }
 }
