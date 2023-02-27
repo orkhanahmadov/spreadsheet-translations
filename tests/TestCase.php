@@ -23,8 +23,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function storeSpreadsheetFile(array $rows): void
     {
         $spreadsheet = new Spreadsheet();
-        $worksheet = $spreadsheet->getWorksheetIterator()->current();
-        $worksheet->fromArray(source: $rows, strictNullComparison: true);
+        $spreadsheet->getActiveSheet()->fromArray($rows);
 
         $xlsx = new Xlsx($spreadsheet);
         $xlsx->save(self::TEST_FILE);

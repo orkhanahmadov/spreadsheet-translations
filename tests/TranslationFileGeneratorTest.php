@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Orkhanahmadov\SpreadsheetTranslations\Tests;
 
 use Orkhanahmadov\SpreadsheetTranslations\TranslationFileGenerator;
@@ -13,7 +15,7 @@ class TranslationFileGeneratorTest extends TestCase
         $generator->generate([
             'en' => [
                 'file' => ['k' => 'v'],
-            ]
+            ],
         ]);
 
         $this->assertFileExists($filepath = lang_path('en/file.php'));
