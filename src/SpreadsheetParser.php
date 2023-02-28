@@ -80,10 +80,13 @@ class SpreadsheetParser
          * ]
          */
         foreach ($this->localeColumns as $locale => $localeColumn) {
-            $this->translations[$locale][$filename][$identifier] = $row->getColumnIterator()
-                ->seek($localeColumn)
-                ->current()
-                ?->getValue();
+            $value = $row->getColumnIterator()->seek($localeColumn)->current()?->getValue();
+
+            if (is_null($value)) {
+                continue;
+            }
+
+            $this->translations[$locale][$filename][$identifier] = $value;
         }
     }
 

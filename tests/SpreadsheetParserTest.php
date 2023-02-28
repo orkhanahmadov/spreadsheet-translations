@@ -105,6 +105,34 @@ class SpreadsheetParserTest extends TestCase
         );
     }
 
+    public function testIgnoresEmptyTranslationFieldsInMultipleLocaleTranslations(): void
+    {
+        Config::set('spreadsheet-translations.locales', ['de', 'en']);
+        $this->storeSpreadsheetFile([
+            ['key', 'comment', 'en', 'de'],
+            ['login.welcome', 'welcome page', 'Welcome', ''],
+            ['login.form.first_name', 'form first name field', '', 'Vorname'],
+            ['dashboard.statistics', 'statistics title', 'Statistics', ''],
+        ]);
+
+        $this->assertSame(
+            [
+                'en' => [
+                    'login' => [
+                        'welcome' => 'Welcome',
+                    ],
+                    'dashboard' => ['statistics' => 'Statistics'],
+                ],
+                'de' => [
+                    'login' => [
+                        'form.first_name' => 'Vorname',
+                    ],
+                ],
+            ],
+            $this->generator->parse()->getTranslations()
+        );
+    }
+
     public function testCanChooseDifferentRowsAsHeader(): void
     {
         Config::set('spreadsheet-translations.header_row_number', 2);
