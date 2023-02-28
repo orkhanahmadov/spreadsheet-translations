@@ -68,6 +68,11 @@ class SpreadsheetParser
         // for example, if key is `auth.login.title`, then filename is `auth`, identifier is `login.title`
         [$filename, $identifier] = $this->parseTranslationKey($row->getColumnIterator());
 
+        // ignore row if filename or identifier is empty
+        if (empty($filename) || empty($identifier)) {
+            return;
+        }
+
         // loop over each locale and with its colum coordinate
         // fill translations so that end result looks like something like this:
         /*
@@ -80,9 +85,9 @@ class SpreadsheetParser
          * ]
          */
         foreach ($this->localeColumns as $locale => $localeColumn) {
-            $value = trim($row->getColumnIterator()->seek($localeColumn)->current()?->getValue() ?? '');
+            $value = $row->getColumnIterator()->seek($localeColumn)->current()?->getValue();
 
-            if (empty($value)) {
+            if (is_null($value)) {
                 continue;
             }
 
@@ -112,11 +117,11 @@ class SpreadsheetParser
     protected function parseTranslationKey(RowCellIterator $columnIterator): array
     {
         $keyColumn = $this->config->get('spreadsheet-translations.key_column');
-        $key = $columnIterator->seek($keyColumn)->current()?->getValue();
+        $key = Str::of($columnIterator->seek($keyColumn)->current()?->getValue())->trim();
 
         return [
-            Str::before($key, '.'), // filename
-            Str::after($key, '.'), // identifier
+            $key->before('.')->toString(), // filename
+            $key->after('.')->toString(), // identifier
         ];
     }
 
