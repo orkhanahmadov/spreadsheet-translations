@@ -80,9 +80,9 @@ class SpreadsheetParser
          * ]
          */
         foreach ($this->localeColumns as $locale => $localeColumn) {
-            $value = $row->getColumnIterator()->seek($localeColumn)->current()?->getValue();
+            $value = trim($row->getColumnIterator()->seek($localeColumn)->current()?->getValue() ?? '');
 
-            if (is_null($value)) {
+            if (empty($value)) {
                 continue;
             }
 
