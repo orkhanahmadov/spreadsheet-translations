@@ -106,13 +106,13 @@ For above spreadsheet file and configuration `translations:generate` will genera
     - `login.php`
       - `['form.first_name' => 'Vorname', 'welcome' => 'Wilkommen']`
 
-### Testing
+## Testing
 
 ```bash
 composer test
 ```
 
-### Changelog
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
