@@ -56,7 +56,8 @@ Config file contains following parameters:
 
 ## Usage
 
-Let's imagine we have the following Excel spreadsheet file in `resources/lang/translations.xlsx` that contains:
+Let's imagine we have the following Excel spreadsheet file which is located in remote server with public URL `https://example.com/translations.xlsx`.
+Spreadsheet contains:
 
 | comments                           | key                   | en         | de        | es             |
 |------------------------------------|-----------------------|------------|-----------|----------------|
@@ -67,6 +68,7 @@ Let's imagine we have the following Excel spreadsheet file in `resources/lang/tr
 
 We want to:
 
+- Point parser to the remote file to download and parse
 - Parse only `en` and `de` locale translations
 - Use `key` column as key, in this case column `B` in spreadsheet coordinates
 - Ignore row number 3
@@ -75,6 +77,7 @@ Once we publish the config file we need to make follow adjustments:
 
 ```php
 [
+    'filepath' => 'https://example.com/translations.xlsx', // direct download URL of the file
     'locales' => ['en', 'de'], // parse `en` and `de` translations only, which means `es` will be ignored
     'key_column' => 'B', // sets key column to B
     'ignored_rows' => [3], // ignore row number 3
