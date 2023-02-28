@@ -113,7 +113,7 @@ class SpreadsheetParserTest extends TestCase
             ['login.welcome', 'welcome page', 'Welcome', ''],
             ['login.form.first_name', 'form first name field', '', 'Vorname'],
             ['dashboard.statistics', 'statistics title', 'Statistics', ''],
-            ["dashboard.", 'should be ignored', '', ''],
+            ['dashboard.', 'should be ignored', '', ''],
             ["\r\n", 'should be ignored', '', ''],
         ]);
 

@@ -18,23 +18,27 @@
     ],
     "require": {
         "php": "^8.0",
-        "guzzlehttp/guzzle": "^7.5",
+        "guzzlehttp/guzzle": "^7.0",
         "illuminate/console": "^8.0|^9.0|^10.0",
         "illuminate/contracts": "^8.0|^9.0|^10.0",
         "illuminate/http": "^8.0|^9.0|^10.0",
         "illuminate/support": "^8.0|^9.0|^10.0",
-        "phpoffice/phpspreadsheet": "^1.27"
+        "phpoffice/phpspreadsheet": "^1.28"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.14",
-        "nunomaduro/larastan": "^2.4",
+        "friendsofphp/php-cs-fixer": "^2.0|^3.14",
+        "mockery/mockery": "^1.4",
+        "nunomaduro/larastan": "^1.0|^2.4",
         "orchestra/testbench": "^6.0|^7.0|^8.0",
         "phpunit/phpunit": "^8.0|^9.0|^10.0"
     },
     "autoload": {
         "psr-4": {
             "Orkhanahmadov\\SpreadsheetTranslations\\": "src"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

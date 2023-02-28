@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Orkhanahmadov\SpreadsheetTranslations\Tests;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 use Orkhanahmadov\SpreadsheetTranslations\SpreadsheetTranslationsServiceProvider;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -18,6 +19,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
         return [
             SpreadsheetTranslationsServiceProvider::class,
         ];
+    }
+
+    protected function laravelVersion(): int
+    {
+        return (int) Str::of($this->app->version())->explode('.')->first();
     }
 
     protected function storeSpreadsheetFile(array $rows): void

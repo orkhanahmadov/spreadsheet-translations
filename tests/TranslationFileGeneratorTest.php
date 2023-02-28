@@ -13,13 +13,13 @@ class TranslationFileGeneratorTest extends TestCase
 
     public function testGeneratesTranslationFiles(): void
     {
-        $this->assertFileDoesNotExist($this->filepath);
+        $this->assertFalse(file_exists($this->filepath));
 
         $this->generator->generate('en', [
             'file' => ['k' => 'v'],
         ]);
 
-        $this->assertFileExists($this->filepath);
+        $this->assertTrue(file_exists($this->filepath));
         $this->assertSame(
             "<?php return [\r\n'k' => 'v'\r\n];",
             file_get_contents($this->filepath)
@@ -40,11 +40,11 @@ class TranslationFileGeneratorTest extends TestCase
 
     public function testCreatesFolderWhenDoesNotExist(): void
     {
-        $this->assertFileDoesNotExist($filepath = lang_path('fr'));
+        $this->assertFalse(file_exists($filepath = lang_path('fr')));
 
         $this->generator->generate('fr', []);
 
-        $this->assertFileExists($filepath);
+        $this->assertTrue(file_exists($filepath));
         rmdir($filepath);
     }
 

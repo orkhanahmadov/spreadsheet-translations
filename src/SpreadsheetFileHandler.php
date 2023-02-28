@@ -6,11 +6,14 @@ namespace Orkhanahmadov\SpreadsheetTranslations;
 
 use Exception;
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Client\Factory;
+use Illuminate\Support\Str;
 
 class SpreadsheetFileHandler
 {
     public function __construct(
+        protected Application $application,
         protected Repository $config,
         protected Factory $http
     ) {
@@ -43,10 +46,11 @@ class SpreadsheetFileHandler
 
     protected function getRemoteFileContents(): string
     {
-        return $this->http
-            ->throw()
-            ->get($this->filePathConfig())
-            ->body();
+        if ($this->laravelVersion() > 8) {
+            $this->http->throw();
+        }
+
+        return $this->http->get($this->filePathConfig())->body();
     }
 
     protected function isRemoteFile(): bool
@@ -57,5 +61,10 @@ class SpreadsheetFileHandler
     protected function filePathConfig(): string
     {
         return $this->config->get('spreadsheet-translations.filepath');
+    }
+
+    protected function laravelVersion(): int
+    {
+        return (int) Str::of($this->application->version())->explode('.')->first();
     }
 }

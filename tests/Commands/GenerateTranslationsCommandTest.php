@@ -30,8 +30,8 @@ class GenerateTranslationsCommandTest extends TestCase
         $generator->shouldReceive('generate')->once()->withArgs(['en', $group]);
 
         $this->artisan('translations:generate')
-            ->expectsOutputToContain('Generating translation files for en...')
-            ->expectsOutputToContain('Generated translation files for en!')
+            ->expectsOutput('Generating translation files for en...')
+            ->expectsOutput('Generated translation files for en!')
             ->assertExitCode(Command::SUCCESS);
     }
 }

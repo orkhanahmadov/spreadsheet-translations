@@ -120,8 +120,8 @@ class SpreadsheetParser
         $key = Str::of($columnIterator->seek($keyColumn)->current()?->getValue())->trim();
 
         return [
-            $key->before('.')->toString(), // filename
-            $key->after('.')->toString(), // identifier
+            (string) $key->before('.'), // filename
+            (string) $key->after('.'), // identifier
         ];
     }
 
