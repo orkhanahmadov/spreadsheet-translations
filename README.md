@@ -6,7 +6,7 @@ Easily create Laravel translation files from spreadsheet.
 
 Maintaining multi-language support in Laravel applications can be hard
 
-- Laravel's translation files are in plain PHP files (or sometimes JSON).
+- Laravel's translation files are in plain PHP/JSON files.
 This assumes that the person who's going to translate the application know how to work with PHP/JSON file, which is not always the case
 - Each locale translations are localed under different folders. For example, `en` folder for English translations, `de` folder for German.
 This separation is good on the code level, but makes it hard to maintain 2+ locale translations.
@@ -29,7 +29,7 @@ This solves all above-mentioned problems:
 But now the problem is, Laravel cannot directly work with this spreadsheet file to display translations.
 
 Here comes `spreadsheet-translations` package!
-It reads spreadsheet file that contains translations for multiple locales and generates plain PHP files out of it that Laravel can work with.
+It reads spreadsheet file that contains translations for multiple locales and generates plain JSON files out of it that Laravel can work with.
 
 ## Installation
 
@@ -90,21 +90,15 @@ Package ships with an artisan command `translations:generate`.
 php artisan translations:generate
 ```
 
-When executed it generates necessary folder structures and plain PHP translation files in Laravel's `lang` directory.
+When executed it generates necessary JSON translation files in Laravel's `lang` directory.
 
 For above spreadsheet file and configuration `translations:generate` will generate following folder and file structure:
 
 - `lang/`
-  - `en/`
-    - `dashboard.php`
-      - `['statistics' => 'Stastitics']`
-    - `login.php`
-      - `['form.first_name' => 'First name', 'welcome' => 'Welcome']`
-  - `de/`
-    - `dashboard.php`
-      - `['statistics' => 'Statistik']`
-    - `login.php`
-      - `['form.first_name' => 'Vorname', 'welcome' => 'Wilkommen']`
+  - `en.json`
+    - `{"dashboard.statistics": "Stastitics", "login.form.first_name": "First name", "welcome": "Welcome"}`
+  - `de.json`
+    - `{"dashboard.statistics": "Statistik", "login.form.first_name": "Vorname", "welcome": "Wilkommen"}`
 
 ## Testing
 
