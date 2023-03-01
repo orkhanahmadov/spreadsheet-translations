@@ -10,20 +10,14 @@ class TranslationFileGeneratorTest extends TestCase
 {
     public function testGeneratesTranslationFiles(): void
     {
-        $filepath = lang_path('en.json');
-
-        $this->assertFalse(file_exists($filepath));
-
-        (new TranslationFileGenerator())->generate('en', [
+        (new TranslationFileGenerator())->generate('en', $contents = [
             'identifier' => ['k' => 'v'],
         ]);
 
-        $this->assertTrue(file_exists($filepath));
+        $this->assertTrue(file_exists($filepath = lang_path('en.json')));
         $this->assertSame(
-            '{"identifier":{"k":"v"}}',
+            json_encode($contents, JSON_PRETTY_PRINT),
             file_get_contents($filepath)
         );
-
-        unlink($filepath);
     }
 }

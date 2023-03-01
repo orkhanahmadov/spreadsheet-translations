@@ -13,7 +13,7 @@ class TranslationFileGenerator
     {
         file_put_contents(
             lang_path("{$locale}.json"),
-            json_encode($translations)
+            json_encode($translations, JSON_PRETTY_PRINT)
         );
     }
 }
