@@ -26,8 +26,8 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => ['welcome' => 'Welcome'],
-                    'dashboard' => ['statistics' => 'Statistics'],
+                    'login.welcome' => 'Welcome',
+                    'dashboard.statistics' => 'Statistics',
                 ],
             ],
             $this->generator->parse()->getTranslations()
@@ -45,12 +45,8 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => [
-                        'welcome' => 'Welcome',
-                        'form' => [
-                            'first_name' => 'First name',
-                        ],
-                    ],
+                    'login.welcome' => 'Welcome',
+                    'login.form.first_name' => 'First name',
                 ],
             ],
             $this->generator->parse()->getTranslations()
@@ -67,9 +63,7 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => [
-                        'welcome' => 'Welcome',
-                    ],
+                    'login.welcome' => 'Welcome',
                 ],
             ],
             $this->generator->parse()->getTranslations()
@@ -89,22 +83,14 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => [
-                        'welcome' => 'Welcome',
-                        'form' => [
-                            'first_name' => 'First name',
-                        ],
-                    ],
-                    'dashboard' => ['statistics' => 'Statistics'],
+                    'login.welcome' => 'Welcome',
+                    'login.form.first_name' => 'First name',
+                    'dashboard.statistics' => 'Statistics',
                 ],
                 'de' => [
-                    'login' => [
-                        'welcome' => 'Wilkommen',
-                        'form' => [
-                            'first_name' => 'Vorname',
-                        ],
-                    ],
-                    'dashboard' => ['statistics' => 'Statistik'],
+                    'login.welcome' => 'Wilkommen',
+                    'login.form.first_name' => 'Vorname',
+                    'dashboard.statistics' => 'Statistik',
                 ],
             ],
             $this->generator->parse()->getTranslations()
@@ -126,17 +112,11 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => [
-                        'welcome' => 'Welcome',
-                    ],
-                    'dashboard' => ['statistics' => 'Statistics'],
+                    'login.welcome' => 'Welcome',
+                    'dashboard.statistics' => 'Statistics',
                 ],
                 'de' => [
-                    'login' => [
-                        'form' => [
-                            'first_name' => 'Vorname',
-                        ],
-                    ],
+                    'login.form.first_name' => 'Vorname',
                 ],
             ],
             $this->generator->parse()->getTranslations()
@@ -154,9 +134,7 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => [
-                        'welcome' => 'Welcome',
-                    ],
+                    'login.welcome' => 'Welcome',
                 ],
             ],
             $this->generator->parse()->getTranslations()
@@ -174,9 +152,7 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => [
-                        'welcome' => 'Welcome',
-                    ],
+                    'login.welcome' => 'Welcome',
                 ],
             ],
             $this->generator->parse()->getTranslations()
@@ -195,9 +171,7 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => [
-                        'welcome' => 'Welcome',
-                    ],
+                    'login.welcome' => 'Welcome',
                 ],
             ],
             $this->generator->parse()->getTranslations()
@@ -224,9 +198,7 @@ class SpreadsheetParserTest extends TestCase
         $this->assertSame(
             [
                 'en' => [
-                    'login' => [
-                        'welcome' => 'Welcome',
-                    ],
+                    'login.welcome' => 'Welcome',
                 ],
             ],
             $this->generator->parse()->getTranslations()

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Orkhanahmadov\SpreadsheetTranslations;
 
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -67,7 +66,7 @@ class SpreadsheetParser
         // get value from key column
         $translationKey = $this->parseTranslationKey($row->getColumnIterator());
 
-        // ignore row if filename or identifier is empty
+        // ignore row if translation key is empty
         if (empty($translationKey)) {
             return;
         }
@@ -77,11 +76,7 @@ class SpreadsheetParser
         /*
          * [
          *   'en' => [
-         *      'auth' => [
-         *         'login' => [
-         *             'title' => 'This is title translation for English',
-         *         ],
-         *      ]
+         *      'auth.login.title' => 'This is title translation for English',
          *    ]
          * ]
          */
@@ -92,7 +87,7 @@ class SpreadsheetParser
                 continue;
             }
 
-            Arr::set($this->translations[$locale], $translationKey, $value);
+            $this->translations[$locale][$translationKey] = $value;
         }
     }
 
