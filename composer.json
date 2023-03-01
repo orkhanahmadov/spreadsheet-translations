@@ -23,7 +23,6 @@
         "illuminate/contracts": "^8.0|^9.0|^10.0",
         "illuminate/http": "^8.0|^9.0|^10.0",
         "illuminate/support": "^8.0|^9.0|^10.0",
-        "nette/php-generator": "^4.0",
         "phpoffice/phpspreadsheet": "^1.28"
     },
     "require-dev": {
