@@ -47,7 +47,9 @@ class SpreadsheetParserTest extends TestCase
                 'en' => [
                     'login' => [
                         'welcome' => 'Welcome',
-                        'form.first_name' => 'First name',
+                        'form' => [
+                            'first_name' => 'First name',
+                        ],
                     ],
                 ],
             ],
@@ -89,14 +91,18 @@ class SpreadsheetParserTest extends TestCase
                 'en' => [
                     'login' => [
                         'welcome' => 'Welcome',
-                        'form.first_name' => 'First name',
+                        'form' => [
+                            'first_name' => 'First name',
+                        ],
                     ],
                     'dashboard' => ['statistics' => 'Statistics'],
                 ],
                 'de' => [
                     'login' => [
                         'welcome' => 'Wilkommen',
-                        'form.first_name' => 'Vorname',
+                        'form' => [
+                            'first_name' => 'Vorname',
+                        ],
                     ],
                     'dashboard' => ['statistics' => 'Statistik'],
                 ],
@@ -127,7 +133,9 @@ class SpreadsheetParserTest extends TestCase
                 ],
                 'de' => [
                     'login' => [
-                        'form.first_name' => 'Vorname',
+                        'form' => [
+                            'first_name' => 'Vorname',
+                        ],
                     ],
                 ],
             ],

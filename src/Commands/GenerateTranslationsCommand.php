@@ -20,10 +20,10 @@ class GenerateTranslationsCommand extends Command
     ): int {
         $translations = $parser->parse()->getTranslations();
 
-        foreach ($translations as $locale => $groups) {
+        foreach ($translations as $locale => $contents) {
             $this->warn("Generating translation files for {$locale}...");
 
-            $fileGenerator->generate($locale, $groups);
+            $fileGenerator->generate($locale, $contents);
 
             $this->info("Generated translation files for {$locale}!");
         }

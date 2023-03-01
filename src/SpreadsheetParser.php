@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Orkhanahmadov\SpreadsheetTranslations;
 
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
@@ -64,12 +64,11 @@ class SpreadsheetParser
 
     protected function parseRow(Row $row): void
     {
-        // get value from key column and parse it into 2 different variables as filename and identifier
-        // for example, if key is `auth.login.title`, then filename is `auth`, identifier is `login.title`
-        [$filename, $identifier] = $this->parseTranslationKey($row->getColumnIterator());
+        // get value from key column
+        $translationKey = $this->parseTranslationKey($row->getColumnIterator());
 
         // ignore row if filename or identifier is empty
-        if (empty($filename) || empty($identifier)) {
+        if (empty($translationKey)) {
             return;
         }
 
@@ -79,7 +78,9 @@ class SpreadsheetParser
          * [
          *   'en' => [
          *      'auth' => [
-         *         'login.title' => 'This is title translation for English',
+         *         'login' => [
+         *             'title' => 'This is title translation for English',
+         *         ],
          *      ]
          *    ]
          * ]
@@ -91,7 +92,7 @@ class SpreadsheetParser
                 continue;
             }
 
-            $this->translations[$locale][$filename][$identifier] = $value;
+            Arr::set($this->translations[$locale], $translationKey, $value);
         }
     }
 
@@ -114,15 +115,14 @@ class SpreadsheetParser
         return $spreadsheet->getSheetByName($sheetName); // @phpstan-ignore-line
     }
 
-    protected function parseTranslationKey(RowCellIterator $columnIterator): array
+    protected function parseTranslationKey(RowCellIterator $columnIterator): string
     {
-        $keyColumn = $this->config->get('spreadsheet-translations.key_column');
-        $key = Str::of($columnIterator->seek($keyColumn)->current()?->getValue())->trim();
+        $translationKeyValue = $columnIterator
+            ->seek($this->config->get('spreadsheet-translations.key_column'))
+            ->current()
+            ?->getValue();
 
-        return [
-            (string) $key->before('.'), // filename
-            (string) $key->after('.'), // identifier
-        ];
+        return trim($translationKeyValue ?? '');
     }
 
     protected function findLocaleColumns(): void

@@ -10,6 +10,9 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Str;
 
+/**
+ * @interal
+ */
 class SpreadsheetFileHandler
 {
     public function __construct(
