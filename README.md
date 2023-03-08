@@ -1,6 +1,10 @@
 ## Spreadsheet translations for Laravel
 
-Easily create Laravel translation files from spreadsheet.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/orkhanahmadov/spreadsheet-translations.svg?style=flat-square)](https://packagist.org/packages/orkhanahmadov/spreadsheet-translations)
+[![Total Downloads](https://img.shields.io/packagist/dt/orkhanahmadov/spreadsheet-translations.svg?style=flat-square)](https://packagist.org/packages/orkhanahmadov/spreadsheet-translations)
+![GitHub Actions](https://github.com/orkhanahmadov/spreadsheet-translations/actions/workflows/main.yml/badge.svg)
+
+![Spreadsheet Translation](https://banners.beyondco.de/Spreadsheet%20Translations%20for%20Laravel.png?theme=light&packageManager=composer+require&packageName=orkhanahmadov%2Fspreadsheet-translations&pattern=architect&style=style_1&description=Easily+create+Laravel+translation+files+from+spreadsheet+&md=1&showWatermark=0&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg)
 
 ## Why?
 
@@ -128,3 +132,7 @@ If you discover any security related issues, please email hey@orkhan.dev instead
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+## Alternatives
+
+You can check [larswiegers/laravel-translations-checker](https://github.com/LarsWiegers/laravel-translations-checker) if you want to detect missing translations.
