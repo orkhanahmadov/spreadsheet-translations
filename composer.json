@@ -17,28 +17,25 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "guzzlehttp/guzzle": "^6.0|^7.0",
-        "illuminate/console": "^8.0|^9.0|^10.0",
-        "illuminate/contracts": "^8.0|^9.0|^10.0",
-        "illuminate/http": "^8.0|^9.0|^10.0",
-        "illuminate/support": "^8.0|^9.0|^10.0",
-        "phpoffice/phpspreadsheet": "^1.28"
+        "illuminate/console": "^9.0|^10.0",
+        "illuminate/contracts": "^9.0|^10.0",
+        "illuminate/http": "^9.0|^10.0",
+        "illuminate/support": "^9.0|^10.0",
+        "phpoffice/phpspreadsheet": "^1.28|^2.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0|^3.14",
         "mockery/mockery": "^1.4",
-        "nunomaduro/larastan": "^1.0|^2.4",
-        "orchestra/testbench": "^6.0|^7.0|^8.0",
-        "phpunit/phpunit": "^8.0|^9.0|^10.0"
+        "larastan/larastan": "^1.0|^2.4",
+        "orchestra/testbench": "^7.0|^8.0",
+        "phpunit/phpunit": "^9.0|^10.0"
     },
     "autoload": {
         "psr-4": {
             "Orkhanahmadov\\SpreadsheetTranslations\\": "src"
-        },
-        "files": [
-            "src/functions.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

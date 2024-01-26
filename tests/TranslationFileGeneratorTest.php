@@ -14,7 +14,7 @@ class TranslationFileGeneratorTest extends TestCase
             'identifier' => ['k' => 'v'],
         ]);
 
-        $this->assertTrue(file_exists($filepath = lang_path('en.json')));
+        $this->assertFileExists($filepath = lang_path('en.json'));
         $this->assertSame(
             json_encode($contents, JSON_PRETTY_PRINT),
             file_get_contents($filepath)

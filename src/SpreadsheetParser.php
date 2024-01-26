@@ -21,8 +21,7 @@ class SpreadsheetParser
     public function __construct(
         protected Repository $config,
         protected SpreadsheetFileHandler $fileHandler
-    ) {
-    }
+    ) {}
 
     public function getTranslations(): array
     {
@@ -57,7 +56,8 @@ class SpreadsheetParser
         // ignore if row is one of the ignored rows
         return in_array(
             $row->getRowIndex(),
-            $this->config->get('spreadsheet-translations.ignored_rows')
+            $this->config->get('spreadsheet-translations.ignored_rows'),
+            true
         );
     }
 

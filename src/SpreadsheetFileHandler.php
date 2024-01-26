@@ -19,8 +19,7 @@ class SpreadsheetFileHandler
         protected Application $application,
         protected Repository $config,
         protected Factory $http
-    ) {
-    }
+    ) {}
 
     public function getFilePath(): string
     {
