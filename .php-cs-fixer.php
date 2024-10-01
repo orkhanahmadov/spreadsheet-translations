@@ -63,9 +63,7 @@ $rules = [
     'single_line_comment_style' => [
         'comment_types' => ['hash'],
     ],
-    'nullable_type_declaration_for_default_null_value' => [
-        'use_nullable_type_declaration' => true,
-    ],
+    'nullable_type_declaration_for_default_null_value' => true,
     'concat_space' => [
         'spacing' => 'one',
     ],

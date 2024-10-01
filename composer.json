@@ -23,7 +23,7 @@
         "illuminate/contracts": "^9.0 || ^10.0 || ^11.0",
         "illuminate/http": "^9.0 || ^10.0 || ^11.0",
         "illuminate/support": "^9.0 || ^10.0 || ^11.0",
-        "phpoffice/phpspreadsheet": "^1.28 || ^2.0"
+        "phpoffice/phpspreadsheet": "^1.28 || ^2.0 || ^3.0"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.42",
@@ -31,7 +31,7 @@
         "larastan/larastan": "^1.0 || ^2.4",
         "mockery/mockery": "^1.4",
         "orchestra/testbench": "^7.0 || ^8.0 || ^9.0",
-        "phpunit/phpunit": "^9.0 || ^10.0"
+        "phpunit/phpunit": "^9.0 || ^10.0 || ^11.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
