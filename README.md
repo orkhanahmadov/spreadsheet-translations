@@ -11,12 +11,12 @@
 Maintaining multi-language support in Laravel applications can be hard
 
 - Laravel's translation files are in plain PHP/JSON files.
-This assumes that the person who's going to translate the application know how to work with PHP/JSON file, which is not always the case
-- Each locale translations are localed under different folders. For example, `en` folder for English translations, `de` folder for German.
-This separation is good on the code level, but makes it hard to maintain 2+ locale translations.
-- It is easy to add one new key and translation for English but forget to do it in German, since there's nothing that forces this or makes it easy to spot.
+This assumes that the person who's going to translate the application knows how to work with PHP/JSON files, which is not always the case
+- Each locale's translations are located in different folders. For example, the `en` folder contains English translations, and the `de` folder contains German translations.
+This separation is good on the code level but makes it hard to maintain 2+ locale translations.
+It is easy to add one new key and translation for English but forget to do it in German since nothing forces this or makes it easy to spot.
 
-Alternatively you can store application's translations in a spreadsheet file, something like:
+Alternatively, you can store the application's translations in a spreadsheet file, something like:
 
 | key                   | en         | de        | es             |
 |-----------------------|------------|-----------|----------------|
@@ -24,20 +24,20 @@ Alternatively you can store application's translations in a spreadsheet file, so
 | login.form.first_name | First name | Vorname   | Nombre de pila |
 | login.welcome         | Welcome    | Wilkommen | Bienvenida     |
 
-This solves all above-mentioned problems:
+This solves all the above-mentioned problems:
 
-- Translations maintainer does not need to know how to work with PHP or JSON
+- The translations maintainer does not need to know how to work with PHP or JSON
 - All translations are maintained in a single file and view
-- Each translation is located under locale column, which makes is very easy to spot missing translations
+- Each translation is located under the locale column, which makes it very easy to spot missing translations
 
-But now the problem is, Laravel cannot directly work with this spreadsheet file to display translations.
+But now the problem is, that Laravel cannot directly work with this spreadsheet file to display translations.
 
-Here comes `spreadsheet-translations` package!
-It reads spreadsheet file that contains translations for multiple locales and generates plain JSON files out of it that Laravel can work with.
+Here comes the `spreadsheet-translations` package!
+It reads spreadsheet files that contain translations for multiple locales and generates plain JSON files out of it that Laravel can work with.
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
 ```bash
 composer require orkhanahmadov/spreadsheet-translations
@@ -49,18 +49,18 @@ Publish config file using:
 php artisan vendor:publish --provider="Orkhanahmadov\SpreadsheetTranslations\SpreadsheetTranslationsServiceProvider"
 ```
 
-Config file contains following parameters:
+The config file contains the following parameters:
 
-- `locales` - array of locale codes that parser should look for in spreadsheet. Default is `['en']`
-- `filepath` - path to spreadsheet file. By default, points to `translations.xlsx` file in Laravel project's `lang` directory. This config parameter can also use URL as remote file location. When a valid URL is provided parse will try to download the file to a temporary local file and parse it.
-- `sheet` - defines which sheet should be used in spreadsheet file. Default is `null`. When `null`, parser selects active sheet in the spreadsheet to parse translations from. If you want to use a different sheet, provide sheet's name on this parameter.
-- `header_row_number` - which row should be used as header. Default is `1`. Header row should contain locale codes that are defined `locales` config parameter
-- `key_column` - which column should be used for translation keys. Default is `A` column.
-- `ignored_rows` - array of row numbers which should be ignored when translations are parsed. Default is empty array.
+- `locales` - an array of locale codes that the parser should look for in the spreadsheet. The default is `['en']`
+- `filepath` - path to a spreadsheet file. By default, points to the `translations.xlsx` file in the Laravel project's `lang` directory. This config parameter can also use a URL as a remote file location. When a valid URL is provided parser will try to download the file to a temporary local file and parse it.
+- `sheet` - defines which sheet should be used in a spreadsheet file. The default is `null`. When `null`, the parser selects an active sheet in the spreadsheet to parse translations from. If you want to use a different sheet, provide the sheet's name on this parameter.
+- `header_row_number` - which row should be used as header. The default is `1`. The header row should contain locale codes that are defined as `locales` config parameter
+- `key_column` - which column should be used for translation keys. The default is `A` column.
+- `ignored_rows` - an array of row numbers that should be ignored when translations are parsed. The default is an empty array.
 
 ## Usage
 
-Let's imagine we have the following Excel spreadsheet file which is located in remote server with public URL `https://example.com/translations.xlsx`.
+Let's imagine we have the following Excel spreadsheet file which is located in a remote server with a public URL `https://example.com/translations.xlsx`.
 Spreadsheet contains:
 
 | comments                           | key                   | en         | de        | es             |
@@ -74,10 +74,10 @@ We want to:
 
 - Point parser to the remote file to download and parse
 - Parse only `en` and `de` locale translations
-- Use `key` column as key, in this case column `B` in spreadsheet coordinates
+- Use the `key` column as key, in this case, column `B` in the spreadsheet coordinates
 - Ignore row number 3
 
-Once we publish the config file we need to make follow adjustments:
+Once we publish the config file we need to make the following adjustments:
 
 ```php
 [
@@ -122,11 +122,12 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 ## Security
 
-If you discover any security related issues, please email hey@orkhan.dev instead of using the issue tracker.
+If you discover any security-related issues, please email hey@orkhan.dev instead of using the issue tracker.
 
 ## Credits
 
 -   [Orkhan Ahmadov](https://github.com/orkhanahmadov)
+-   [AirLST GmbH](https://airlst.com)
 -   [All Contributors](../../contributors)
 
 ## License
