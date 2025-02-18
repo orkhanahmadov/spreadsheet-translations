@@ -2,6 +2,10 @@
 
 All notable changes to `spreadsheet-translations` will be documented in this file
 
+## 1.6.0 - 2025-02-18
+
+- Add support for `phpoffice/phpspreadsheet` v4
+
 ## 1.5.0 - 2024-10-01
 
 - Add support for `phpoffice/phpspreadsheet` v3
