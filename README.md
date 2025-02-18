@@ -127,6 +127,7 @@ If you discover any security related issues, please email hey@orkhan.dev instead
 ## Credits
 
 -   [Orkhan Ahmadov](https://github.com/orkhanahmadov)
+-   [AirLST GmbH](https://airlst.com)
 -   [All Contributors](../../contributors)
 
 ## License
