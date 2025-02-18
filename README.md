@@ -11,12 +11,12 @@
 Maintaining multi-language support in Laravel applications can be hard
 
 - Laravel's translation files are in plain PHP/JSON files.
-This assumes that the person who's going to translate the application know how to work with PHP/JSON file, which is not always the case
-- Each locale translations are localed under different folders. For example, `en` folder for English translations, `de` folder for German.
-This separation is good on the code level, but makes it hard to maintain 2+ locale translations.
-- It is easy to add one new key and translation for English but forget to do it in German, since there's nothing that forces this or makes it easy to spot.
+This assumes that the person who's going to translate the application knows how to work with PHP/JSON files, which is not always the case
+- Each locale's translations are located in different folders. For example, the `en` folder contains English translations, and the `de` folder contains German translations.
+This separation is good on the code level but makes it hard to maintain 2+ locale translations.
+It is easy to add one new key and translation for English but forget to do it in German since nothing forces this or makes it easy to spot.
 
-Alternatively you can store application's translations in a spreadsheet file, something like:
+Alternatively, you can store the application's translations in a spreadsheet file, something like:
 
 | key                   | en         | de        | es             |
 |-----------------------|------------|-----------|----------------|
@@ -24,15 +24,15 @@ Alternatively you can store application's translations in a spreadsheet file, so
 | login.form.first_name | First name | Vorname   | Nombre de pila |
 | login.welcome         | Welcome    | Wilkommen | Bienvenida     |
 
-This solves all above-mentioned problems:
+This solves all the above-mentioned problems:
 
-- Translations maintainer does not need to know how to work with PHP or JSON
+- The translations maintainer does not need to know how to work with PHP or JSON
 - All translations are maintained in a single file and view
-- Each translation is located under locale column, which makes is very easy to spot missing translations
+- Each translation is located under the locale column, which makes it very easy to spot missing translations
 
-But now the problem is, Laravel cannot directly work with this spreadsheet file to display translations.
+But now the problem is, that Laravel cannot directly work with this spreadsheet file to display translations.
 
-Here comes `spreadsheet-translations` package!
+Here comes the `spreadsheet-translations` package!
 It reads spreadsheet file that contains translations for multiple locales and generates plain JSON files out of it that Laravel can work with.
 
 ## Installation
