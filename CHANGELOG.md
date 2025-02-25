@@ -2,7 +2,7 @@
 
 All notable changes to `spreadsheet-translations` will be documented in this file
 
-## 1.7.0 - 2025-02-25
+## 2.0.0 - 2025-02-25
 
 - Add support for Laravel 12
 - Drop support for Laravel 10
