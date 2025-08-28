@@ -2,6 +2,13 @@
 
 All notable changes to `spreadsheet-translations` will be documented in this file
 
+## 3.0.0 - 2025-08-28
+
+- Added support for `phpoffice/phpspreadsheet` v5
+- Added support for `phpunit/phpunit` v12
+- Drop support for `phpoffice/phpspreadsheet` v1 and v2
+- Drop support for `phpunit/phpunit` v9
+
 ## 2.0.0 - 2025-02-25
 
 - Add support for Laravel 12
